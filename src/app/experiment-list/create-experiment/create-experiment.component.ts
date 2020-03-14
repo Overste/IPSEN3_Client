@@ -4,6 +4,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {getCreateExperimentUrl} from "../ExperimentUrl";
 import {NgForm} from "@angular/forms";
 import {ExperimentListComponent} from "../experiment-list.component";
+import DataModel from '../../models/DataModel';
 
 
 @Component({
@@ -38,7 +39,9 @@ export class CreateExperimentComponent implements OnInit {
       {
         headers: new HttpHeaders({
           'Accept': 'application/json',
-          'Content-Type': 'application/json'})
+          'Content-Type': 'application/json',
+          'token': DataModel.account.token
+        })
       }).subscribe(
         responseData => {
           this.dataFromServer = responseData;

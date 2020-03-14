@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import DataModel from "../models/DataModel";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {ServerModel} from "../models/ServerModel";
 import {UserRole} from "../models/UserRole";
 
@@ -50,12 +50,18 @@ export class UserPermissionService {
    * Initializes the class by getting the role of the person that is using the application.
    */
   initialize(callBack?: Function) {
-    var token = DataModel.account.token;
     var host = ServerModel.host;
     var port = ServerModel.port;
-    var url = "http://" + host + ":" + port + "/user/"  + token + "/getRole";
-    this.http.get(url, {responseType: "text"}).subscribe(r => {
-      this.role = UserRole[r];
+    var url = "http://" + host + ":" + port + "/user/getRole";
+    const httpOptions = {
+      headers: new HttpHeaders({
+        responseType: 'text',
+        'token': DataModel.account.token
+      })
+    };
+
+    this.http.get(url, httpOptions).subscribe(r => {
+      this.role = UserRole[r.toString()];
       if(callBack)
         callBack();
       }

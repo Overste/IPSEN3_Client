@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {getExperimentUrl} from "./ExperimentUrl";
 import {ExperimentModel} from "../models/ExperimentModel";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
@@ -32,8 +32,13 @@ export class ExperimentListComponent implements OnInit {
   }
 
   showExperiments() {
+    const httpOptions =  {
+      headers: new HttpHeaders({
+        'token': DataModel.account.token
+      })
+    };
     this.http.get<ExperimentModel[]>(
-      getExperimentUrl())
+      getExperimentUrl(), httpOptions)
       .subscribe(
         responseData => {
           this.filterService.isDataSet.next(responseData)
@@ -57,16 +62,23 @@ export class ExperimentListComponent implements OnInit {
   deleteExperiment(experiment : ExperimentModel) {
     this.popupService.showConfirmPopup(experiment.experiment_name).then(
       () => {
+        const httpOptions =  {
+          headers: new HttpHeaders({
+            responseType: "text",
+            'token': DataModel.account.token
+          })
+        };
+
         this.http.delete(
           deleteExperiment(experiment.experiment_id),
-          { responseType: "text" }
+          httpOptions
         ).subscribe(responseData => {
-          if (responseData.toLowerCase() == "succes") {
+          if (responseData.toString().toLowerCase() == "succes") {
             this.showExperiments();
             this.popupService.succesPopup(
               experiment.experiment_name + ' is succesvol verwijderd!'
             );
-          } else { this.popupService.dangerPopup(responseData); }
+          } else { this.popupService.dangerPopup(responseData.toString()); }
         });
       }
     )

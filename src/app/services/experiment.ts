@@ -5,16 +5,14 @@ import DataModel from '../models/DataModel';
 export function getExperiments() {
   var host = ServerModel.host;
   var port = ServerModel.port;
-  var token = DataModel.account.token;
 
   // var url = "http://" + host + ":" + port + "/experiment/showAllExperiments";
-  return "http://" + host + ":" + port + "/experiment/" +token+"/showAllExperiments";
+  return "http://" + host + ":" + port + "/experiment/showAllExperiments";
 }
 
 export function deleteExperiment(experiment_id : number) {
   var host = ServerModel.host;
   var port = ServerModel.port;
-  var token = DataModel.account.token;
 
-  return "http://" + host + ":" + port + "/experiment/" + token + "/remove/" + experiment_id;
+  return "http://" + host + ":" + port + "/experiment/remove/" + experiment_id;
 }

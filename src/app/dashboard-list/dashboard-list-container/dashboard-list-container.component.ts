@@ -77,8 +77,15 @@ export class DashboardListContainerComponent implements OnInit {
   }
 
   fetchPost(){
+
+    const httpOptions =  {
+      headers: new HttpHeaders({
+        'token': DataModel.account.token
+      })
+    };
+
     this.http
-      .get<ExperimentModel>(getExperimentUrl())
+      .get<ExperimentModel>(getExperimentUrl(), httpOptions)
       .subscribe(posts => {
         this.serverExperiments = posts;
       });
@@ -90,7 +97,8 @@ export class DashboardListContainerComponent implements OnInit {
       {
         headers: new HttpHeaders(
           { "Accept": "application/json",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            'token': DataModel.account.token
           })
       }).subscribe(posts => { this.postData(posts); },
       (err: HttpErrorResponse) => {  this.postError(err); });

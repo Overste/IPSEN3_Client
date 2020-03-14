@@ -10,8 +10,7 @@ import { ProtocolR } from '../models/Protocol';
 export function loadUsers() {
   var host = ServerModel.host;
   var port = ServerModel.port;
-  var token = DataModel.account.token;
-  var url = "http://" + host + ":" + port + "/user/"+ token + "/showAllUsers";
+  var url = "http://" + host + ":" + port + "/user/showAllUsers";
   return url
 }
 
@@ -61,8 +60,7 @@ export function register(username, password, email) {
 export function getUsers() {
   var host = ServerModel.host;
   var port = ServerModel.port;
-  var token = DataModel.account.token;
-  var url = "http://" + host + ":" + port + "/user/"+ token + "/showAllUsers";
+  var url = "http://" + host + ":" + port + "/user/showAllUsers";
   return url;
 }
 
@@ -73,8 +71,7 @@ export function getUsers() {
 export function deleteUser() {
   var host = ServerModel.host;
   var port = ServerModel.port;
-  var token = DataModel.account.token;
-  var url = "http://" + host + ":" + port + "/user/" + token + "/removeUser";
+  var url = "http://" + host + ":" + port + "/user/removeUser";
   return url;
 }
 
@@ -88,7 +85,6 @@ export function updateUserRole(id: number, role: UserRole) {
 
   var host = ServerModel.host;
   var port = ServerModel.port;
-  var token = DataModel.account.token;
-  var url = "http://" + host + ":" + port + "/user/" + token + "/" + id + "/" + role + "/updateUserRole";
+  var url = "http://" + host + ":" + port + "/user/" + id + "/" + role + "/updateUserRole";
   return url;
 }

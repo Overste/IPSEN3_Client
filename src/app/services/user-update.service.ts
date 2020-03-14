@@ -6,6 +6,7 @@ import {PopupService} from "../popup.service";
 import {UserRole} from "../models/UserRole";
 import {UserPermissionService} from "./user-permission-service";
 import {ResponseModel} from "../models/ResponseModel";
+import DataModel from '../models/DataModel';
 
 @Injectable({providedIn: 'root'})
 export class UserUpdate {
@@ -75,7 +76,14 @@ export class UserUpdate {
   async saveChanges() {
     if (this.permissions.hasSuperPermissions()) {
       for (let user of this.changes) {
-        this.http.put<ResponseModel>(await updateUserRole(user.user_id, user.user_role), null)
+
+        const httpOptions =  {
+          headers: new HttpHeaders({
+            'token': DataModel.account.token
+          })
+        };
+
+        this.http.put<ResponseModel>(await updateUserRole(user.user_id, user.user_role), null, httpOptions)
           .subscribe(r => {
             this.handleResponse(r.response);
             this.emptyChanges();
@@ -105,8 +113,13 @@ export class UserUpdate {
    */
   async deleteUser(user: UserModel) {
     if (this.permissions.hasSuperPermissions()) {
+      const httpOptions =  {
+        headers: new HttpHeaders({
+          'token': DataModel.account.token
+        })
+      };
       this.http.post<string>(
-        await deleteUser(), user.username
+        await deleteUser(), user.username, httpOptions
       ).subscribe(r => {
         this.handleResponse(r);
       });

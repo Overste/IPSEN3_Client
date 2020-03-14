@@ -53,8 +53,14 @@ export class ExistingExperimentComponent implements OnInit {
   fetchLogRows(){
     let url = this.configureDowloadUrl();
 
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'token': DataModel.account.token
+      })
+    };
+
     this.http.get<LogModel[]>(
-      url).subscribe(responseData => {
+      url, httpOptions).subscribe(responseData => {
           this.dataFromServer = responseData;
         }
       )
@@ -63,17 +69,15 @@ export class ExistingExperimentComponent implements OnInit {
   configureDowloadUrl(){
     let host = ServerModel.host;
     let port = ServerModel.port;
-    let token = DataModel.account.token;
-    let url = "http://" + host + ":" + port + "/log/" + token +" /download/" + this.experiment_id;
+    let url = "http://" + host + ":" + port + "/log/download/" + this.experiment_id;
     return url
   }
 
   configureUploadUrl(){
     let host = ServerModel.host;
     let port = ServerModel.port;
-    let token = DataModel.account.token;
 
-    let url = "http://" + host + ":" + port + "/log/" + token +"/upload/";
+    let url = "http://" + host + ":" + port + "/log/upload";
     return url;
   }
 
@@ -88,7 +92,8 @@ export class ExistingExperimentComponent implements OnInit {
       {
         headers: new HttpHeaders({
           "Accept": "application/json",
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          'token': DataModel.account.token
         })
 
       }).subscribe(responsData => {
@@ -118,7 +123,8 @@ export class ExistingExperimentComponent implements OnInit {
       {
         headers: new HttpHeaders({
           'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'token': DataModel.account.token
         })
       }).subscribe(
       responseData => {

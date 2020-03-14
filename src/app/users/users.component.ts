@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {getUsers} from '../services/user';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {UserModel} from "../models/UserModel";
 import {UserRole} from '../models/UserRole';
 import {UpdateUsersComponent} from "../update-users/update-users.component";
@@ -94,8 +94,14 @@ export class UsersComponent implements OnInit {
   }
 
   showUsers(){
+    const httpOptions =  {
+      headers: new HttpHeaders({
+        'token': DataModel.account.token
+      })
+    };
+
     this.http.get<UserModel[]>(
-      getUsers())
+      getUsers(), httpOptions)
       .subscribe(
         responseData => {
           this.filterService.isDataSet.next(responseData)

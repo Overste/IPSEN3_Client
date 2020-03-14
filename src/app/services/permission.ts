@@ -13,12 +13,7 @@ import { AccountModel } from '../models/AccountModel';
 export function hasDelete() {
   var host = ServerModel.host;
   var port = ServerModel.port;
-  var token = DataModel.account.token
-  var url = "http://" + host + ":" + port + "/user/" + token + "/hasDelete";
-  var data = null
-
-
-
+  var url = "http://" + host + ":" + port + "/user/hasDelete";
 
   return fetchPost(url);
 }
@@ -31,8 +26,7 @@ export function hasDelete() {
 export function hasAdmin() {
   var host = ServerModel.host;
   var port = ServerModel.port;
-  var token = DataModel.account.token
-  var url = "http://" + host + ":" + port + "/user/" + token + "/hasAdmin";
+  var url = "http://" + host + ":" + port + "/user/hasAdmin";
   return fetchPost(url);
 }
 
@@ -45,8 +39,7 @@ export function hasAdmin() {
 export function hasWrite() {
   var host = ServerModel.host;
   var port = ServerModel.port;
-  var token = DataModel.account.token
-  var url = "http://" + host + ":" + port + "/user/" + token + "/hasWrite";
+  var url = "http://" + host + ":" + port + "/user/hasWrite";
 
 
 
@@ -65,8 +58,7 @@ export function hasWrite() {
 export function hasRead() {
   var host = ServerModel.host;
   var port = ServerModel.port;
-  var token = DataModel.account.token
-  var url = "http://" + host + ":" + port + "/user/"+ token+"/hasRead";
+  var url = "http://" + host + ":" + port + "/user/hasRead";
 
 
 
