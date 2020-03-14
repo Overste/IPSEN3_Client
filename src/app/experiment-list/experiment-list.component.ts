@@ -62,16 +62,11 @@ export class ExperimentListComponent implements OnInit {
   deleteExperiment(experiment : ExperimentModel) {
     this.popupService.showConfirmPopup(experiment.experiment_name).then(
       () => {
-        const httpOptions =  {
-          headers: new HttpHeaders({
-            responseType: "text",
-            'token': DataModel.account.token
-          })
-        };
+        const headers =  new HttpHeaders().set('token', DataModel.account.token);
 
         this.http.delete(
           deleteExperiment(experiment.experiment_id),
-          httpOptions
+          {responseType: 'text', headers}
         ).subscribe(responseData => {
           if (responseData.toString().toLowerCase() == "succes") {
             this.showExperiments();

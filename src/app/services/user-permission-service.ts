@@ -53,17 +53,14 @@ export class UserPermissionService {
     var host = ServerModel.host;
     var port = ServerModel.port;
     var url = "http://" + host + ":" + port + "/user/getRole";
-    const httpOptions = {
-      headers: new HttpHeaders({
-        responseType: 'text',
-        'token': DataModel.account.token
-      })
-    };
+    const headers =  new HttpHeaders().set('token', DataModel.account.token);
 
-    this.http.get(url, httpOptions).subscribe(r => {
-      this.role = UserRole[r.toString()];
+    this.http.get(url, {responseType: 'text', headers}).subscribe(r => {
+      this.role = UserRole[r];
       if(callBack)
         callBack();
+      }, error => {
+      console.log(error);
       }
     );
   }
