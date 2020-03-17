@@ -1,13 +1,13 @@
 <html lang="en">
     <body class="container">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 column">
                 <app-dashboard-list-container [phase]="'Idee fase'" [phaseCheck]="'Idee'" (notifyExperiment)="setExperimentParent($event)" [experimentChild]="experimentParent"></app-dashboard-list-container>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 column">
                 <app-dashboard-list-container [phase]="'Lab-in fase'" [phaseCheck]="'Het lab in'" (notifyExperiment)="setExperimentParent($event)" [experimentChild]="experimentParent"></app-dashboard-list-container>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 column">
                 <app-dashboard-list-container [phase]="'Lab-uit fase'" [phaseCheck]="'Het lab uit'" (notifyExperiment)="setExperimentParent($event)" [experimentChild]="experimentParent"></app-dashboard-list-container>
             </div>
         </div>
