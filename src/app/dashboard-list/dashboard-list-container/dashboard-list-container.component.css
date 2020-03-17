@@ -19,12 +19,11 @@
   margin: 1em;
   padding: 0.4em;
   border-radius: 5px;
-  background-color: #A8D0E6;;
-  /*border: 1px solid black;*/
+  background-color: #A8D0E6;
 }
 
 .boxcontainer:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
   transition: 0.5s;
   cursor: grab;
 }
