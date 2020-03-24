@@ -10,37 +10,34 @@
       <th scope="col" class="col-1">Id</th>
       <th scope="col" class="col-1">Fase</th>
       <th scope="col" class="col-1">Status</th>
-      <th scope="col" class="col-2">Business owner</th>
-      <th scope="col" class="col-1">Inkomen</th>
+      <th scope="col" class="col-2">Business&nbsp;owner</th>
+      <th scope="col" class="col-2">Inkomen</th>
       <th scope="col" class="col-2">Organisation</th>
-      <th scope="col" class="col-2">Verwijderen</th>
+      <th scope="col" class="col-1">&nbsp;</th>
     </thead>
     <tbody>
-      <tr *ngFor="let experiment of filterService.observable$ | async" >
-        <div (click)="openExistingExperiment(experiment)">
-          <td class="col-2"><ngb-highlight [result]="experiment.experiment_name" [term]="filterService.filter.value"></ngb-highlight></td>
-          <td class="col-1"><ngb-highlight [result]="experiment.experiment_id" [term]="filterService.filter.value"></ngb-highlight></td>
-          <td class="col-1"><ngb-highlight [result]="experiment.experiment_phase" [term]="filterService.filter.value"></ngb-highlight></td>
-          <td class="col-1"><ngb-highlight [result]="experiment.experiment_status" [term]="filterService.filter.value"></ngb-highlight></td>
-          <td class="col-2"><ngb-highlight [result]="experiment.business_owner" [term]="filterService.filter.value"></ngb-highlight></td>
-          <td class="col-1"><ngb-highlight [result]="experiment.money_source" [term]="filterService.filter.value"></ngb-highlight></td>
-          <td class="col-2"><ngb-highlight [result]="experiment.organisation" [term]="filterService.filter.value"></ngb-highlight></td>
-        </div>
-        <td class="col-2">
-          <input
+      <tr *ngFor="let experiment of filterService.observable$ | async" (click)="openExistingExperiment(experiment)">
+        <td class="col-2"><ngb-highlight [result]="experiment.experiment_name" [term]="filterService.filter.value"></ngb-highlight></td>
+        <td class="col-1"><ngb-highlight [result]="experiment.experiment_id" [term]="filterService.filter.value"></ngb-highlight></td>
+        <td class="col-1"><ngb-highlight [result]="experiment.experiment_phase" [term]="filterService.filter.value"></ngb-highlight></td>
+        <td class="col-1"><ngb-highlight [result]="experiment.experiment_status" [term]="filterService.filter.value"></ngb-highlight></td>
+        <td class="col-2"><ngb-highlight [result]="experiment.business_owner" [term]="filterService.filter.value"></ngb-highlight></td>
+        <td class="col-2"><ngb-highlight [result]="experiment.money_source" [term]="filterService.filter.value"></ngb-highlight></td>
+        <td class="col-2"><ngb-highlight [result]="experiment.organisation" [term]="filterService.filter.value"></ngb-highlight></td>
+        <td class="col-1">
+          <button
             type="button"
             name="deleteExperiment"
             id="deleteExperiment"
-            value="Verwijder"
             class="btn btn-danger btn-block"
             [disabled]="!canEdit"
             (click)="deleteExperiment(experiment)"
-          >
+          ><span class="glyphicon glyphicon-trash"></span></button>
         </td>
       </tr>
       </tbody>
     </table>
     <div class="btn-group btn-toolbar">
-      <button class="btn" [disabled]="!canEdit" (click)="openCreateExperiment()">Maak experiment</button>
+      <button class="btn createbutton" [disabled]="!canEdit" (click)="openCreateExperiment()">Maak experiment</button>
     </div>
   </div>
