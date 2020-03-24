@@ -28,6 +28,7 @@ import { DashboardListContainerComponent } from './dashboard-list/dashboard-list
 import {FilterService} from './filter.service';
 import {PopupService} from './popup.service';
 import {RolepipePipe} from './rolepipe.pipe';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import {RolepipePipe} from './rolepipe.pipe';
     DashboardListComponent,
     DashboardListContainerComponent,
     RolepipePipe,
+    ProfileComponent,
 
   ],
     imports: [
@@ -85,6 +87,10 @@ import {RolepipePipe} from './rolepipe.pipe';
                     path: 'dashboard',
                     component: DashboardListComponent
                 },
+              {
+                path: 'profile',
+                component: ProfileComponent
+              },
 
                 // otherwise redirect to home
                 {path: '**', redirectTo: ''}
