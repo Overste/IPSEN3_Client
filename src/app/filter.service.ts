@@ -1,7 +1,7 @@
-import {FormControl} from "@angular/forms";
-import {BehaviorSubject, Observable} from "rxjs";
-import {map, startWith} from "rxjs/operators";
-import {Injectable} from "@angular/core";
+import {FormControl} from '@angular/forms';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+import {Injectable} from '@angular/core';
 
 @Injectable()
 export class FilterService {
@@ -14,7 +14,7 @@ export class FilterService {
   constructor() {
     this._isDataSet.subscribe(
       data => {
-        if (typeof data !== "undefined") {
+        if (typeof data !== 'undefined') {
           this._data = this._isDataSet.value;
           this.observable$ = this.filter.valueChanges.pipe(
             startWith(''),
@@ -22,13 +22,13 @@ export class FilterService {
           );
         }
       }
-    )
+    );
   }
 
   search(text: string): any[] {
     return this._data.filter(data => {
       const term = text.toLowerCase();
-      for (let value of Object.values(data)) {
+      for (const value of Object.values(data)) {
         if (value.toString().toLowerCase().includes(term)) {
           return value;
         }

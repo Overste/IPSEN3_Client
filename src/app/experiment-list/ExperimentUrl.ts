@@ -18,7 +18,7 @@ export function getCreateExperimentUrl() {
   return url
 }
 
-export function getUpdateExperimentUrl(){
+export function getUpdateExperimentUrl() {
   var host = ServerModel.host;
   var port = ServerModel.port;
   var token = DataModel.account.token;
@@ -32,4 +32,11 @@ export function getPhaseExperimentUrl() {
   var token = DataModel.account.token;
   var url = "http://" + host + ":" + port + "/experiment/showPhaseOfExperiments";
   return url
+}
+
+export function deleteExperiment(experiment_id : number) {
+  var host = ServerModel.host;
+  var port = ServerModel.port;
+
+  return "http://" + host + ":" + port + "/experiment/remove/" + experiment_id;
 }

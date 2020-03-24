@@ -29,16 +29,15 @@ export class PopupService implements OnInit {
   }
 
   infoPopup(name: string) {
-    this.showPopup(name, 'info')
+    this.showPopup(name, 'info');
   }
 
   warningPopup(name: string) {
-    this.showPopup(name, 'warning')
+    this.showPopup(name, 'warning');
   }
 
   dangerPopup(name: string) {
-    this.showPopup(name, 'danger')
-
+    this.showPopup(name, 'danger');
   }
 
   showPopup(name: string, type: string) {

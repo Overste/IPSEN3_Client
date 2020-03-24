@@ -9,7 +9,7 @@ import {UserRole} from "../models/UserRole";
  * This class is used to check if a user has permissions for certain actions.
  */
 
-@Injectable({providedIn: "root"})
+@Injectable({providedIn: 'root'})
 export class UserPermissionService {
 
   role: UserRole;
@@ -22,7 +22,7 @@ export class UserPermissionService {
   }
 
   hasSuperPermissions() {
-    if(this.role == UserRole.SUPERUSER) {
+    if (this.role === UserRole.SUPERUSER) {
       return true;
     } else {
       return false;
@@ -30,7 +30,7 @@ export class UserPermissionService {
   }
 
   hasEmployeePermissions() {
-    if(this.role == UserRole.EMPLOYEE || this.role == UserRole.SUPERUSER) {
+    if (this.role === UserRole.EMPLOYEE || this.role === UserRole.SUPERUSER) {
       return true;
     } else {
       return false;
@@ -38,7 +38,7 @@ export class UserPermissionService {
   }
 
   hasUserPermissions() {
-    if(this.role == UserRole.USER || this.role == UserRole.EMPLOYEE || this.role == UserRole.SUPERUSER) {
+    if (this.role === UserRole.USER || this.role === UserRole.EMPLOYEE || this.role === UserRole.SUPERUSER) {
       return true;
     } else {
       return false;
@@ -64,5 +64,4 @@ export class UserPermissionService {
       }
     );
   }
-
 }

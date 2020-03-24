@@ -19,15 +19,16 @@ import { AlertPopupComponent } from './popup/alert-popup/alert-popup.component';
 import { HorizontaleNavigationBarComponent } from './horizontale-navigation-bar/horizontale-navigation-bar.component';
 import { VerticalNavigationBarComponent } from './vertical-navigation-bar/vertical-navigation-bar.component';
 import { CreateExperimentComponent } from './experiment-list/create-experiment/create-experiment.component';
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import { FormsModule , ReactiveFormsModule} from "@angular/forms";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule , ReactiveFormsModule } from '@angular/forms';
 import { ExistingExperimentComponent } from './experiment-list/existing-experiment/existing-experiment.component';
-import {UpdateUsersComponent} from './update-users/update-users.component';
+import { UpdateUsersComponent} from './update-users/update-users.component';
 import { DashboardListComponent } from './dashboard-list/dashboard-list.component';
 import { DashboardListContainerComponent } from './dashboard-list/dashboard-list-container/dashboard-list-container.component';
-import {FilterService} from './filter.service';
-import {PopupService} from './popup.service';
-import {RolepipePipe} from './rolepipe.pipe';
+import { FilterService } from './filter.service';
+import { PopupService } from './popup.service';
+import { RolepipePipe } from './rolepipe.pipe';
+import { GraveyardComponent } from './experiment-list/graveyard/graveyard.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import {RolepipePipe} from './rolepipe.pipe';
     DashboardListComponent,
     DashboardListContainerComponent,
     RolepipePipe,
+    GraveyardComponent,
 
   ],
     imports: [
@@ -79,6 +81,10 @@ import {RolepipePipe} from './rolepipe.pipe';
                 {
                     path: 'experiment',
                     component: ExperimentListComponent
+                },
+                {
+                    path: 'graveyard',
+                    component: GraveyardComponent
                 },
 
                 {

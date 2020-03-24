@@ -4,6 +4,8 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {getCreateExperimentUrl} from '../ExperimentUrl';
 import {NgForm} from '@angular/forms';
 import DataModel from '../../models/DataModel';
+import {isEmpty} from 'rxjs/operators';
+import {PopupService} from '../../popup.service';
 
 @Component({
   selector: 'app-create-experiment',
@@ -23,14 +25,15 @@ export class CreateExperimentComponent implements OnInit {
   inovation_cost: number;
   money_source: string;
 
-  constructor(private http: HttpClient, public activeModal: NgbActiveModal) { }
+  constructor(private http: HttpClient, public activeModal: NgbActiveModal, private popupService: PopupService) { }
 
   ngOnInit() {
   }
 
   async onSubmit(form: NgForm) {
     const data = form.value;
-    if (undefined !== data.value) {
+
+    if (!this.checkEmptiness(data)) {
       this.http.post(getCreateExperimentUrl(), data,
         {
           headers: new HttpHeaders({
@@ -41,9 +44,22 @@ export class CreateExperimentComponent implements OnInit {
         }).subscribe(
         responseData => {
           this.dataFromServer = responseData;
+          console.log(' responseData '+ responseData);
+          this.popupService.succesPopup('Experiment succesvol aangemaakt!');
         }
       );
     }
     this.activeModal.close();
+  }
+
+  checkEmptiness(data: any) {
+    for (const key in data) {
+      const value = data[key];
+      if (value === '' || value === undefined) {
+        console.log("empty found");
+        return true;
+      }
+    }
+    return false;
   }
 }
