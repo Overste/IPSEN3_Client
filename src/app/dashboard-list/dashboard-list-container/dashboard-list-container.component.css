@@ -1,37 +1,48 @@
 .header-color{
-    background-color: #024D78;
-    color: white;
+  background-color: #024D78;
+  color: white;
 }
 
 .ng-status{
-    color: white;
-    border-radius: 0.4em;
-    margin: 0.5em;
-    text-align: center;
+  color: white;
+  border-radius: 0.4em;
+  margin: 0.5em;
+  text-align: center;
 }
 
 .box{
-    padding: 0.4em;
-    border-radius: 15px;
-    background-color: #A8D0E6;
+  padding: 0.4em;
+  height: 100%;
 }
 
 .boxcontainer{
-    margin: 1em;
-    padding: 0.4em;;
-    background-color: #F8E9A1;
-    border-radius: 3px;
+  margin: 1em;
+  padding: 0.4em;
+  border-radius: 5px;
+  background-color: #A8D0E6;
+}
+
+.boxcontainer:hover {
+  transform: scale(1.1);
+  transition: 0.5s;
+  cursor: grab;
+}
+
+ul {
+  padding: 0 !important;
+  width: 100% !important;
 }
 
 li{
-    list-style: none;
+  list-style: none;
+  padding: 0;
 }
 
 .add-boxcontainer{
-    padding-bottom: 6.5em;
-    background-color: #9abdce;
+  padding-bottom: 6.5em;
+  background-color: #9abdce;
 }
 
 .transparant{
-    opacity: 0.5;
+  opacity: 0.5;
 }

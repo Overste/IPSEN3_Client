@@ -1,4 +1,11 @@
 html, body{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1.1em;
+  padding-top: 0.2em;
+}
+
+.column {
+  padding: 0;
+  overflow: hidden;
+  height: 100%;
 }
