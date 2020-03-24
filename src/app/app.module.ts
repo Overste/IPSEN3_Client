@@ -29,6 +29,7 @@ import { FilterService } from './filter.service';
 import { PopupService } from './popup.service';
 import { RolepipePipe } from './rolepipe.pipe';
 import { GraveyardComponent } from './experiment-list/graveyard/graveyard.component';
+import { ExperimentService } from './experiment.service';
 
 @NgModule({
   declarations: [
@@ -109,6 +110,7 @@ import { GraveyardComponent } from './experiment-list/graveyard/graveyard.compon
   providers: [
     PopupService,
     FilterService,
+    ExperimentService,
     {
       provide: LocationStrategy,
       useClass: HashLocationStrategy

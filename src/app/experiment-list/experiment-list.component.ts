@@ -11,6 +11,7 @@ import DataModel from '../models/DataModel';
 import {Router} from '@angular/router';
 import {FilterService } from '../filter.service';
 import {UserPermissionService} from '../services/user-permission-service';
+import {ExperimentService} from '../experiment.service';
 
 @Component({
   selector: 'app-experiment-list',
@@ -19,67 +20,68 @@ import {UserPermissionService} from '../services/user-permission-service';
 })
 
 export class ExperimentListComponent implements OnInit {
-  dataFromServer: any;
-  canEdit = false;
 
   constructor(
     private http: HttpClient,
     private popupService: PopupService,
     private modalService: NgbModal,
-    private router: Router,
-    private permissionService: UserPermissionService,
-    public filterService: FilterService) {
+    public filterService: FilterService,
+    public experimentService: ExperimentService) {
   }
 
-  showExperiments() {
-    const httpOptions =  {
-      headers: new HttpHeaders({
-        token: DataModel.account.token
-      })
-    };
-    this.http.get<ExperimentModel[]>(
-      getExperimentUrl(), httpOptions)
-      .subscribe(
-        responseData => {
-          this.filterService.isDataSet.next(responseData);
-        }
-      );
+  ngOnInit(): void {
+    this.experimentService.showExperiments();
   }
 
-  ngOnInit() {
-    if (DataModel.account.token == null) {
-      this.popupService.dangerPopup('U bent nog niet ingelogd.');
-      this.router.navigate(['/']);
-    } else {
-      const self = this;
-      this.permissionService.initialize(() => {
-        self.canEdit = self.permissionService.hasSuperPermissions();
-      });
-      this.showExperiments();
-    }
-  }
+  // showExperiments() {
+  //   const httpOptions =  {
+  //     headers: new HttpHeaders({
+  //       token: DataModel.account.token
+  //     })
+  //   };
+  //   this.http.get<ExperimentModel[]>(
+  //     getExperimentUrl(), httpOptions)
+  //     .subscribe(
+  //       responseData => {
+  //         this.filterService.isDataSet.next(responseData);
+  //       }
+  //     );
+  // }
+  //
+  // ngOnInit() {
+  //   if (DataModel.account.token == null) {
+  //     this.popupService.dangerPopup('U bent nog niet ingelogd.');
+  //     this.router.navigate(['/']);
+  //   } else {
+  //     const self = this;
+  //     this.permissionService.initialize(() => {
+  //       self.canEdit = self.permissionService.hasSuperPermissions();
+  //     });
+  //     this.experimentService.getExperiment();
+  //   }
+  // }
+  //
+  // deleteExperiment(experiment : ExperimentModel) {
+  //   this.popupService.showConfirmPopup(experiment.experiment_name).then(
+  //     () => {
+  //       const headers =  new HttpHeaders().set('token', DataModel.account.token);
+  //
+  //       this.http.delete(
+  //         deleteExperiment(experiment.experiment_id),
+  //         {responseType: 'text', headers}
+  //       ).subscribe(responseData => {
+  //         if (responseData.toString().toLowerCase() == 'succes') {
+  //           this.showExperiments();
+  //           this.popupService.succesPopup(
+  //             experiment.experiment_name + ' is succesvol verwijderd!'
+  //           );
+  //         } else { this.popupService.dangerPopup(responseData.toString()); }
+  //       });
+  //     }
+  //   );
+  // }
 
-  deleteExperiment(experiment : ExperimentModel) {
-    this.popupService.showConfirmPopup(experiment.experiment_name).then(
-      () => {
-        const headers =  new HttpHeaders().set('token', DataModel.account.token);
-
-        this.http.delete(
-          deleteExperiment(experiment.experiment_id),
-          {responseType: 'text', headers}
-        ).subscribe(responseData => {
-          if (responseData.toString().toLowerCase() == 'succes') {
-            this.showExperiments();
-            this.popupService.succesPopup(
-              experiment.experiment_name + ' is succesvol verwijderd!'
-            );
-          } else { this.popupService.dangerPopup(responseData.toString()); }
-        });
-      }
-    );
-  }
-
-  openExistingExperiment(model: ExperimentModel){
+  openExistingExperiment(model: ExperimentModel) {
     const modal = this.modalService.open(ExistingExperimentComponent, { windowClass : 'myCustomModalClass'});
     modal.componentInstance.model = model;
   }

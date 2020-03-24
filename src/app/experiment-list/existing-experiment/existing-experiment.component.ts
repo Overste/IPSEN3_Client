@@ -35,6 +35,9 @@ export class ExistingExperimentComponent implements OnInit {
 
   constructor(public activeModal: NgbActiveModal, private http: HttpClient) { }
 
+  experimentFases = ['idee', 'labin', 'labuit', 'freezer', 'halloffame', 'graveyard', 'fixedservices'];
+  // experimentStatus = ['idee', 'labin', 'labuit'];
+
   ngOnInit() {
     this.business_owner = this.model.business_owner;
     this.experiment_description = this.model.experiment_description;
@@ -55,7 +58,7 @@ export class ExistingExperimentComponent implements OnInit {
 
     const httpOptions = {
       headers: new HttpHeaders({
-        'token': DataModel.account.token
+        token: DataModel.account.token
       })
     };
 
@@ -63,7 +66,7 @@ export class ExistingExperimentComponent implements OnInit {
       url, httpOptions).subscribe(responseData => {
           this.dataFromServer = responseData;
         }
-      )
+      );
   }
 
   configureDowloadUrl(){
@@ -103,8 +106,6 @@ export class ExistingExperimentComponent implements OnInit {
   }
 
   updateProject() {
-    console.log(this.newLogTitle)
-
     let data =  JSON.stringify({
       "id": this.experiment_id,
       "name": this.experiment_name,
@@ -117,7 +118,6 @@ export class ExistingExperimentComponent implements OnInit {
       "money_source": this.money_source,
       "organisations": this.organisation
     });
-    console.log(data);
 
     this.http.post(getUpdateExperimentUrl(), data,
       {
