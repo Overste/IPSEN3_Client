@@ -1,0 +1,23 @@
+<div class="container">
+
+  <h2>Profiel</h2>
+  <hr>
+
+  <p *ngIf="!dataIsSet">Loading...</p>
+
+  <p *ngIf="dataIsSet">Accountgegevens:</p>
+
+  <form *ngIf="dataIsSet">
+
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input class="form-control"type="text" id="username" [value]="userdata.username">
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input class="form-control"type="email" id="email" [value]="userdata.email">
+    </div>
+
+  </form>
+
+</div>
