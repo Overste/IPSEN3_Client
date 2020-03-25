@@ -1,10 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {getCreateExperimentUrl} from '../ExperimentUrl';
 import {NgForm} from '@angular/forms';
 import DataModel from '../../models/DataModel';
-import {isEmpty} from 'rxjs/operators';
 import {PopupService} from '../../popup.service';
 
 @Component({
@@ -12,7 +11,7 @@ import {PopupService} from '../../popup.service';
   templateUrl: './create-experiment.component.html',
   styleUrls: ['./create-experiment.component.css']
 })
-export class CreateExperimentComponent implements OnInit {
+export class CreateExperimentComponent {
   dataFromServer: any;
   id: number;
   name: string;
@@ -26,9 +25,6 @@ export class CreateExperimentComponent implements OnInit {
   money_source: string;
 
   constructor(private http: HttpClient, public activeModal: NgbActiveModal, private popupService: PopupService) { }
-
-  ngOnInit() {
-  }
 
   async onSubmit(form: NgForm) {
     const data = form.value;
@@ -44,7 +40,6 @@ export class CreateExperimentComponent implements OnInit {
         }).subscribe(
         responseData => {
           this.dataFromServer = responseData;
-          console.log(' responseData '+ responseData);
           this.popupService.succesPopup('Experiment succesvol aangemaakt!');
         }
       );
@@ -56,7 +51,6 @@ export class CreateExperimentComponent implements OnInit {
     for (const key in data) {
       const value = data[key];
       if (value === '' || value === undefined) {
-        console.log("empty found");
         return true;
       }
     }

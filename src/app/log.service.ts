@@ -3,10 +3,23 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import DataModel from './models/DataModel';
 import {LogModel} from './models/LogModel';
 import {Injectable} from '@angular/core';
+import {PopupService} from './popup.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class LogService {
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private popupService: PopupService,
+    private modalService: NgbModal,
+    private router: Router
+  ) {
+    if (DataModel.account.token == null) {
+      this.popupService.dangerPopup('U bent nog niet ingelogd.');
+      this.router.navigate(['/']);
+    }
+  }
 
   fetchLogRows(experiment_id: number) {
     const url = getConfigureDowloadUrl(experiment_id);

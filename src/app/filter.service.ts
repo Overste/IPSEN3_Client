@@ -36,7 +36,6 @@ export class FilterService {
     });
   }
 
-
   get isDataSet(): BehaviorSubject<any> {
     return this._isDataSet;
   }
