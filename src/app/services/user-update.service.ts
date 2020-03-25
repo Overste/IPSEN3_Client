@@ -151,6 +151,9 @@ export class UserUpdate {
       case 404:
         this.popupService.dangerPopup("We konden geen overeenkomde data vinden, probeer het later opnieuw.")
         break;
+      case 500:
+        this.popupService.dangerPopup("Er ging iets mis, probeer het later opnieuw.");
+        break;
     }
   }
 }

@@ -67,13 +67,13 @@ export class ExperimentListComponent implements OnInit {
         this.http.delete(
           deleteExperiment(experiment.experiment_id),
           {responseType: 'text', headers}
-        ).subscribe(responseData => {
-          if (responseData.toString().toLowerCase() == "succes") {
+        ).subscribe(() => {
             this.showExperiments();
             this.popupService.succesPopup(
               experiment.experiment_name + ' is succesvol verwijderd!'
             );
-          } else { this.popupService.dangerPopup(responseData.toString()); }
+        }, error => {
+          this.handleError(error);
         });
       }
     )
@@ -86,5 +86,17 @@ export class ExperimentListComponent implements OnInit {
 
   openCreateExperiment() {
     this.modalService.open(CreateExperimentComponent, { windowClass : "myCustomModalClass"});
+  }
+
+  private handleError(error: any) {
+    switch (error.status) {
+      case 401:
+        this.popupService.dangerPopup("U heeft niet de juiste rechten.");
+        break;
+      case 400:
+        this.popupService.dangerPopup("We konden u identiteit niet valideren, neem contact op met de systeembeheerder.");
+      case 500:
+        this.popupService.dangerPopup("Er ging iets mis, probeer het later nog eens.");
+    }
   }
 }

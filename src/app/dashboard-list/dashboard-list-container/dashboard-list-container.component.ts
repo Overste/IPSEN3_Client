@@ -92,16 +92,18 @@ export class DashboardListContainerComponent implements OnInit {
   }
 
   postRequest(dashboardModel: DashboardModel){
+
+    const headers = new HttpHeaders(
+      { "Accept": "application/json",
+        "Content-Type": "application/json",
+        'token': DataModel.account.token
+      });
+
     this.http
-      .post<DashboardModel>(getPhaseExperimentUrl(), dashboardModel,
-      {
-        headers: new HttpHeaders(
-          { "Accept": "application/json",
-            "Content-Type": "application/json",
-            'token': DataModel.account.token
-          })
+      .post(getPhaseExperimentUrl(), dashboardModel,
+      { responseType: 'text', headers
       }).subscribe(posts => { this.postData(posts); },
-      (err: HttpErrorResponse) => {  this.postError(err); });
+      err => {  this.postError(err); });
   }
 
   postBody(){
@@ -118,9 +120,9 @@ export class DashboardListContainerComponent implements OnInit {
   }
 
   postError(err: HttpErrorResponse){
+    console.log(err);
     this.serverExperimentsOnUpload = err.error;
     this.showPopUpFailed();
-    setTimeout(()=> location.reload(), 2300);
   }
 
   showPopUpSucces(){
@@ -135,7 +137,7 @@ export class DashboardListContainerComponent implements OnInit {
 
   showPopUpFailed(){
     this.popupService.dangerPopup(
-      'CONNECTION ERROR: ' + this.experimentChild.experiment_name + ' Is Niet Fase Veranderd! Probeer Opnieuw.'
+      'Er ging iets mis, ' + this.experimentChild.experiment_name + ' is niet van fase veranderd.'
     );
   }
 

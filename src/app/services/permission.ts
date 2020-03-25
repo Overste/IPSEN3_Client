@@ -78,7 +78,7 @@ function hasPermissionFromResponse(response: String) {
 *
 */
 export async function setHasRead() {
-  var variable = "hasRead"
+  var variable = "hasRead";
   await hasRead().then(response => {
 
     if (hasPermissionFromResponse(response)) {
