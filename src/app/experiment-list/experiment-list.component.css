@@ -1,4 +1,3 @@
-
 .table-fixed thead {
   width: 100%;
 }
@@ -8,6 +7,7 @@
   overflow: auto;
   width: 100%;
   display: inline-grid;
+  overflow-x: hidden !important;
 }
 
 .table-fixed thead, .table-fixed tr, .table-fixed td, .table-fixed th {
@@ -29,11 +29,21 @@ table.table-fixed  {
   color: white;
 }
 
-button {
+.table-fixed tr:hover {
+  transform: scale(1.02);
+  transition: 1s;
+  cursor: pointer;
+}
+
+.createbutton {
   background-color: #024D78;
   color: white;
 }
 
 .max-width {
   width: 100%;
+}
+
+.glyphicon {
+  background: none !important;
 }

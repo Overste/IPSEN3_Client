@@ -1,11 +1,9 @@
-import {Component, OnInit, Output} from '@angular/core';
-import {NgbActiveModal, NgbModal, NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {getCreateExperimentUrl} from "../ExperimentUrl";
-import {NgForm} from "@angular/forms";
-import {ExperimentListComponent} from "../experiment-list.component";
+import {Component, OnInit} from '@angular/core';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {getCreateExperimentUrl} from '../ExperimentUrl';
+import {NgForm} from '@angular/forms';
 import DataModel from '../../models/DataModel';
-
 
 @Component({
   selector: 'app-create-experiment',
@@ -24,29 +22,28 @@ export class CreateExperimentComponent implements OnInit {
   businessOwners: string;
   inovation_cost: number;
   money_source: string;
-  private modalReference: any;
 
-  constructor(private http: HttpClient, public activeModal: NgbActiveModal) {
-  }
+  constructor(private http: HttpClient, public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
   }
 
   async onSubmit(form: NgForm) {
-    let data = form.value;
-
-    this.http.post(getCreateExperimentUrl(), data,
-      {
-        headers: new HttpHeaders({
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'token': DataModel.account.token
-        })
-      }).subscribe(
+    const data = form.value;
+    if (undefined !== data.value) {
+      this.http.post(getCreateExperimentUrl(), data,
+        {
+          headers: new HttpHeaders({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            token: DataModel.account.token
+          })
+        }).subscribe(
         responseData => {
           this.dataFromServer = responseData;
         }
-      )
+      );
+    }
     this.activeModal.close();
   }
 }
