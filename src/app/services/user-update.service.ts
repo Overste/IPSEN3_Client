@@ -5,7 +5,6 @@ import {Injectable} from "@angular/core";
 import {PopupService} from "../popup.service";
 import {UserRole} from "../models/UserRole";
 import {UserPermissionService} from "./user-permission-service";
-import {ResponseModel} from "../models/ResponseModel";
 import DataModel from '../models/DataModel';
 
 @Injectable({providedIn: 'root'})
@@ -143,8 +142,8 @@ export class UserUpdate {
     }
   }
 
-  handleResponse(response: any) {
-    switch (response.status) {
+  handleResponse(error: any) {
+    switch (error.status) {
       case 400:
         this.popupService.dangerPopup("Er ging iets mis, probeer het later opnieuw.");
         break;

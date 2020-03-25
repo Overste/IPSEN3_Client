@@ -6,6 +6,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { getUpdateExperimentUrl} from '../ExperimentUrl';
 import {LogModel} from '../../models/LogModel';
 import DataModel from "../../models/DataModel";
+import {PopupService} from '../../popup.service';
 
 @Component({
   selector: 'app-existing-experiment-component',
@@ -33,7 +34,7 @@ export class ExistingExperimentComponent implements OnInit {
   newLogTitle: string = "Log titel";
   newLogDescription: string = "Log omschrijving";
 
-  constructor(public activeModal: NgbActiveModal, private http: HttpClient) { }
+  constructor(public activeModal: NgbActiveModal, private http: HttpClient, private popupService: PopupService) { }
 
   ngOnInit() {
     this.business_owner = this.model.business_owner;
@@ -62,7 +63,9 @@ export class ExistingExperimentComponent implements OnInit {
     this.http.get<LogModel[]>(
       url, httpOptions).subscribe(responseData => {
           this.dataFromServer = responseData;
-        }
+        }, error => {
+        this.handleError(error);
+      }
       )
   }
 
@@ -99,6 +102,8 @@ export class ExistingExperimentComponent implements OnInit {
       }).subscribe(responsData => {
       this.dataFromServerOnUpload = responsData;
       this.fetchLogRows();
+    }, error => {
+      this.handleError(error);
     });
   }
 
@@ -130,8 +135,23 @@ export class ExistingExperimentComponent implements OnInit {
       responseData => {
         this.dataFromServerUpdate = responseData;
         console.log(responseData);
-      }
-    )
+      }, error => {
+        this.handleError(error);
+      });
     this.fetchLogRows();
+  }
+
+  private handleError(error: any) {
+    switch (error.status) {
+      case 400:
+        this.popupService.dangerPopup("Er ging iets mis, probeer het later nog een keer.");
+        break;
+      case 401:
+        this.popupService.dangerPopup("U heeft niet de juiste rechten voor deze bewerking.");
+        break;
+      case 500:
+        this.popupService.dangerPopup("Er ging iets mis, probeer het later nog een keer.");
+        break;
+    }
   }
 }

@@ -102,7 +102,10 @@ export class DashboardListContainerComponent implements OnInit {
     this.http
       .post(getPhaseExperimentUrl(), dashboardModel,
       { responseType: 'text', headers
-      }).subscribe(posts => { this.postData(posts); },
+      }).subscribe(posts => {
+        this.postData(posts);
+        this.fetchPost();
+        },
       err => {  this.postError(err); });
   }
 
