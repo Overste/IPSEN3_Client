@@ -30,6 +30,7 @@ import { PopupService } from './popup.service';
 import { RolepipePipe } from './rolepipe.pipe';
 import { GraveyardComponent } from './experiment-list/graveyard/graveyard.component';
 import { ExperimentService } from './experiment.service';
+import {LogService} from './log.service';
 
 @NgModule({
   declarations: [
@@ -111,6 +112,7 @@ import { ExperimentService } from './experiment.service';
     PopupService,
     FilterService,
     ExperimentService,
+    LogService,
     {
       provide: LocationStrategy,
       useClass: HashLocationStrategy

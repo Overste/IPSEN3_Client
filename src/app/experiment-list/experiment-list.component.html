@@ -2,7 +2,7 @@
   <h2>Experimenten</h2>
   <hr>
   <div class="form-group form-inline">
-    <input class="form-control max-width" type="text" placeholder="Zoek experimenten.." [formControl]="filterService.filter"/>
+    <input class="form-control max-width" type="text" placeholder="Zoek experimenten..." [formControl]="filterService.filter"/>
   </div>
   <table class="table table-fixed ">
     <thead>
@@ -33,7 +33,7 @@
             id="deleteExperiment"
             value="Verwijder"
             class="btn btn-danger btn-block"
-            [disabled]="!canEdit"
+            [disabled]="!experimentService.canEdit"
             (click)="deleteExperiment(experiment)"
           >
         </td>
@@ -41,6 +41,6 @@
       </tbody>
     </table>
     <div class="btn-group btn-toolbar">
-      <button class="btn" [disabled]="!canEdit" (click)="openCreateExperiment()">Maak experiment</button>
+      <button class="btn" [disabled]="!experimentService.canEdit" (click)="openCreateExperiment()">Maak experiment</button>
     </div>
   </div>

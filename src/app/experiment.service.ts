@@ -6,7 +6,12 @@ import {UserPermissionService} from './services/user-permission-service';
 import {FilterService} from './filter.service';
 import DataModel from './models/DataModel';
 import {ExperimentModel} from './models/ExperimentModel';
-import {getExperimentUrl} from './experiment-list/ExperimentUrl';
+import {
+  getExperimentUrl,
+  getUpdateExperimentUrl,
+  deleteExperiment
+} from './experiment-list/ExperimentUrl';
+
 import {Injectable} from '@angular/core';
 
 @Injectable()
@@ -32,7 +37,7 @@ export class ExperimentService {
     }
   }
 
-  showExperiments() {
+  showExperiments(phase?: string) {
     const httpOptions =  {
       headers: new HttpHeaders({
         token: DataModel.account.token
@@ -42,29 +47,56 @@ export class ExperimentService {
       getExperimentUrl(), httpOptions
     ).subscribe(
       responseData => {
-        this.filterService.isDataSet.next(responseData);
+        this.filterService.isDataSet.next(this.filterExperiment(responseData, phase));
       }
     );
   }
 
+  filterExperiment(experiments: ExperimentModel[], phase?: string) {
+    let filteredExperimentsByPhase = [];
 
-  // deleteExperiment(experiment : ExperimentModel) {
-  //   this.popupService.showConfirmPopup(experiment.experiment_name).then(
-  //     () => {
-  //       const headers =  new HttpHeaders().set('token', DataModel.account.token);
-  //
-  //       this.http.delete(
-  //         deleteExperiment(experiment.experiment_id),
-  //         {responseType: 'text', headers}
-  //       ).subscribe(responseData => {
-  //         if (responseData.toString().toLowerCase() == 'succes') {
-  //           this.showExperiments();
-  //           this.popupService.succesPopup(
-  //             experiment.experiment_name + ' is succesvol verwijderd!'
-  //           );
-  //         } else { this.popupService.dangerPopup(responseData.toString()); }
-  //       });
-  //     }
-  //   );
-  // }
+    if (typeof phase !== 'undefined') {
+      for (const experiment of experiments) {
+        if (experiment.experiment_phase.toLowerCase() === phase.toLowerCase()) {
+          filteredExperimentsByPhase.push(experiment);
+        }
+      }
+    } else  {
+      filteredExperimentsByPhase = experiments;
+    }
+
+    return filteredExperimentsByPhase;
+  }
+
+  deleteExperiment(experiment: ExperimentModel) {
+    this.popupService.showConfirmPopup(experiment.experiment_name).then(
+      () => {
+        const headers =  new HttpHeaders().set('token', DataModel.account.token);
+
+        this.http.delete(
+          deleteExperiment(experiment.experiment_id),
+          {responseType: 'text', headers}
+        ).subscribe(responseData => {
+          if (responseData.toString().toLowerCase() === 'succes') {
+            this.showExperiments();
+            this.popupService.succesPopup(
+              experiment.experiment_name + ' is succesvol verwijderd!'
+            );
+          } else { this.popupService.dangerPopup(responseData.toString()); }
+        });
+      }
+    );
+  }
+
+  updateExperiment(data) {
+    return this.http.post(getUpdateExperimentUrl(), data,
+      {
+        headers: new HttpHeaders({
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          token: DataModel.account.token
+        })
+      }
+    );
+  }
 }
