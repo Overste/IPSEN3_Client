@@ -83,10 +83,12 @@ export class UserUpdate {
           })
         };
 
-        this.http.put<ResponseModel>(await updateUserRole(user.user_id, user.user_role), null, httpOptions)
+        this.http.put(await updateUserRole(user.user_id, user.user_role), null, httpOptions)
           .subscribe(r => {
-            this.handleResponse(r.response);
+            this.popupService.infoPopup("Succesvol afgerond.")
             this.emptyChanges();
+          }, error => {
+            this.handleResponse(error);
           });
       }
     } else {
@@ -121,7 +123,9 @@ export class UserUpdate {
       this.http.post<string>(
         await deleteUser(), user.username, httpOptions
       ).subscribe(r => {
-        this.handleResponse(r);
+        this.popupService.infoPopup("Succesvol afgerond.");
+      }, error => {
+        this.handleResponse(error);
       });
     } else {
       this.popupService.dangerPopup("U heeft niet de juiste permissies voor deze bewerking.");
@@ -140,11 +144,13 @@ export class UserUpdate {
   }
 
   handleResponse(response: any) {
-    if (response === 'fail') {
-      this.popupService.dangerPopup("Er ging iets mis, probeer het later opnieuw.");
-    } else {
-      this.popupService.infoPopup("Succesvol afgerond.");
+    switch (response.status) {
+      case 400:
+        this.popupService.dangerPopup("Er ging iets mis, probeer het later opnieuw.");
+        break;
+      case 404:
+        this.popupService.dangerPopup("We konden geen overeenkomde data vinden, probeer het later opnieuw.")
+        break;
     }
-
   }
 }
