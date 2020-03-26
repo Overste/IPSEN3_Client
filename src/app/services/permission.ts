@@ -1,19 +1,16 @@
-
 import { ServerModel } from '../models/ServerModel';
 import DataModel from '../models/DataModel';
 import { fetchPost } from './http.';
 import { AccountModel } from '../models/AccountModel';
-
-
 /**
 *
 * @author Anthony Scheeres
 *
 */
 export function hasDelete() {
-  var host = ServerModel.host;
-  var port = ServerModel.port;
-  var url = "http://" + host + ":" + port + "/user/hasDelete";
+  let host = ServerModel.host;
+  let port = ServerModel.port;
+  let url = 'http://' + host + ':' + port + '/user/hasDelete';
 
   return fetchPost(url);
 }
@@ -24,9 +21,9 @@ export function hasDelete() {
 *
 */
 export function hasAdmin() {
-  var host = ServerModel.host;
-  var port = ServerModel.port;
-  var url = "http://" + host + ":" + port + "/user/hasAdmin";
+  let host = ServerModel.host;
+  let port = ServerModel.port;
+  let url = 'http://' + host + ':' + port + '/user/hasAdmin';
   return fetchPost(url);
 }
 
@@ -37,9 +34,9 @@ export function hasAdmin() {
 *
 */
 export function hasWrite() {
-  var host = ServerModel.host;
-  var port = ServerModel.port;
-  var url = "http://" + host + ":" + port + "/user/hasWrite";
+  let host = ServerModel.host;
+  let port = ServerModel.port;
+  let url = 'http://' + host + ':' + port + '/user/hasWrite';
 
 
 
@@ -56,9 +53,9 @@ export function hasWrite() {
 *
 */
 export function hasRead() {
-  var host = ServerModel.host;
-  var port = ServerModel.port;
-  var url = "http://" + host + ":" + port + "/user/hasRead";
+  let host = ServerModel.host;
+  let port = ServerModel.port;
+  let url = 'http://' + host + ':' + port + '/user/hasRead';
 
 
 
@@ -68,7 +65,7 @@ export function hasRead() {
 
 
 function hasPermissionFromResponse(response: String) {
-  return response.toLocaleLowerCase() === "true"
+  return response.toLocaleLowerCase() === 'true';
 }
 
 
@@ -78,7 +75,7 @@ function hasPermissionFromResponse(response: String) {
 *
 */
 export async function setHasRead() {
-  var variable = "hasRead";
+  let variable = 'hasRead';
   await hasRead().then(response => {
 
     if (hasPermissionFromResponse(response)) {
@@ -87,9 +84,9 @@ export async function setHasRead() {
       return DataModel.account.hasRead = true;
     }
 
-    localStorage.setItem(variable, "false");
+    localStorage.setItem(variable, 'false');
     DataModel.account.hasRead = false;
-  })
+  });
 }
 
 
@@ -99,18 +96,18 @@ export async function setHasRead() {
 *
 */
 export async function setHasWrite() {
-  var variable = "hasWrite"
+  let variable = 'hasWrite';
   await hasWrite().then(response => {
 
     if (hasPermissionFromResponse(response)) {
 
-      localStorage.setItem(variable, response)
-      return DataModel.account.hasWrite = true
+      localStorage.setItem(variable, response);
+      return DataModel.account.hasWrite = true;
     }
 
-    localStorage.setItem(variable, "false")
-    DataModel.account.hasWrite = false
-  })
+    localStorage.setItem(variable, 'false');
+    DataModel.account.hasWrite = false;
+  });
 }
 
 /**
@@ -119,19 +116,19 @@ export async function setHasWrite() {
 *
 */
 export async function setHasDelete() {
-  var variable = "hasDelete"
+  let variable = 'hasDelete';
   await hasDelete().then(response => {
 
     if (hasPermissionFromResponse(response)) {
 
 
-      localStorage.setItem(variable, response)
-      return DataModel.account.hasDelete = true
+      localStorage.setItem(variable, response);
+      return DataModel.account.hasDelete = true;
     }
 
-    localStorage.setItem(variable, "false")
-    DataModel.account.hasDelete = false
-  })
+    localStorage.setItem(variable, 'false');
+    DataModel.account.hasDelete = false;
+  });
 
 
 
@@ -149,9 +146,9 @@ export function logOut() {
 }
 
 export async function nullHasSuperPermission() {
-  DataModel.account.hasSuperPermission = null
+  DataModel.account.hasSuperPermission = null;
 
-  localStorage.setItem("hasSuperPermission", null)
+  localStorage.setItem('hasSuperPermission', null);
 }
 /**
 *
@@ -171,9 +168,9 @@ export async function nullToken() {
 *
 */
 export async function nullHasWrite() {
-  DataModel.account.hasWrite = null
+  DataModel.account.hasWrite = null;
 
-  localStorage.setItem("hasWrite", null)
+  localStorage.setItem('hasWrite', null);
 }
 /**
 *
@@ -181,9 +178,9 @@ export async function nullHasWrite() {
 *
 */
 export async function nullHasDelete() {
-  DataModel.account.hasDelete = false
+  DataModel.account.hasDelete = false;
 
-  localStorage.setItem("hasDelete", null)
+  localStorage.setItem('hasDelete', null);
 }
 /**
 *
@@ -191,9 +188,9 @@ export async function nullHasDelete() {
 *
 */
 export async function nullHasRead() {
-  DataModel.account.hasRead = false
+  DataModel.account.hasRead = false;
 
-  localStorage.setItem("hasRead", null)
+  localStorage.setItem('hasRead', null);
 }
 
 
@@ -209,8 +206,8 @@ export async function setHasWhatPermission() {
   setHasRead();
 }
 
-function checkInput(val){
-  return val == null || val === false
+function checkInput(val) {
+  return val == null || val === false;
 }
 
 
@@ -221,24 +218,24 @@ function checkInput(val){
 */
 export function hasSuperPermission() {
 
-  let result: boolean = false
-  var delet = DataModel.account.hasDelete;
-  var read = DataModel.account.hasRead;
-  var write = DataModel.account.hasWrite;
+  let result = false;
+  let delet = DataModel.account.hasDelete;
+  let read = DataModel.account.hasRead;
+  let write = DataModel.account.hasWrite;
 
   result = delet && read && write;
-  var val;
-  //"hasRead: " + DataModel.account.hasRead);
+  let val;
+  // "hasRead: " + DataModel.account.hasRead);
   if (checkInput(val)) {
-    localStorage.setItem("hasSuperPermission", "false")
+    localStorage.setItem('hasSuperPermission', 'false');
     DataModel.account.hasSuperPermission = false;
   }
 
   if (!result) {
 
   }
-  localStorage.setItem("hasSuperPermission", "true")
+  localStorage.setItem('hasSuperPermission', 'true');
   DataModel.account.hasSuperPermission = result;
-  return result
+  return result;
 }
 

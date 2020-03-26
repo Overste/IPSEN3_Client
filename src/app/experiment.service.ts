@@ -83,7 +83,9 @@ export class ExperimentService {
               experiment.experiment_name + ' is succesvol verwijderd!'
             );
           } else { this.popupService.dangerPopup(responseData.toString()); }
-        });
+        }, error => {
+            this.handleError(error);
+          });
       }
     );
   }
@@ -98,5 +100,18 @@ export class ExperimentService {
         })
       }
     );
+  }
+
+  handleError(error: any) {
+    switch (error.status) {
+      case 401:
+        this.popupService.dangerPopup('U heeft niet de juiste rechten.');
+        break;
+      case 400:
+        this.popupService.dangerPopup('We konden u identiteit niet valideren, neem contact op met de systeembeheerder.');
+        break;
+      case 500:
+        this.popupService.dangerPopup('Er ging iets mis, probeer het later nog eens.');
+    }
   }
 }
