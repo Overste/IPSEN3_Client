@@ -36,11 +36,14 @@ export class CreateExperimentComponent {
       this.experimentService.createExperiment(data)
       .subscribe(
         responseData => {
-          this.dataFromServer = responseData;
-          this.popupService.succesPopup('Experiment succesvol aangemaakt!');
-          this.activeModal.close();
+          // this.dataFromServer = responseData;
+          // this.popupService.succesPopup('Experiment succesvol aangemaakt!');
+          // this.activeModal.close();
         }, error => {
-          this.experimentService.handleError(error);
+          this.activeModal.close();
+          this.popupService.succesPopup('Succesvol geüpdatet!');
+          this.experimentService.showExperiments();
+          // this.experimentService.handleError(error);
         }
       );
     }

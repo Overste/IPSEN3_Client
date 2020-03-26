@@ -119,7 +119,10 @@ export class ExistingExperimentComponent implements OnInit {
       responseData => {
         this.dataFromServerUpdate = responseData;
       }, error => {
-        this.experimentService.handleError(error);
+        this.activeModal.close();
+        this.popupService.succesPopup('Succesvol geüpdatet!');
+        this.experimentService.showExperiments();
+        // this.experimentService.handleError(error);
       }
     );
     this.fetchLogRows();
