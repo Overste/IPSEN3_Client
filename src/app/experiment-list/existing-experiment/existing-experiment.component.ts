@@ -33,6 +33,26 @@ export class ExistingExperimentComponent implements OnInit {
   newLogTitle = '';
   newLogDescription = '';
 
+  // private experimentFases = {
+  //   idea: 'Idee',
+  //   labin: 'Het lab in',
+  //   labout: 'Het lab uit',
+  //   freezer: 'Gepauzeerd',
+  //   halloffame: 'Succesvol afgerond',
+  //   graveyard: 'Niet succesvol afgerond',
+  //   fixedservices: 'Vaste dienst'
+  // };
+
+  private experimentFases = [
+    'Idee',
+    'Het lab in',
+    'Het lab uit',
+    'Gepauzeerd',
+    'Succesvol afgerond',
+    'Niet succesvol afgerond',
+    'Vaste dienst'
+  ];
+
   constructor(
     public activeModal: NgbActiveModal,
     private http: HttpClient,
