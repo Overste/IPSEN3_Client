@@ -43,7 +43,7 @@ export class ExistingExperimentComponent implements OnInit {
   //   fixedservices: 'Vaste dienst'
   // };
 
-  private experimentFases = [
+  experimentFases = [
     'Idee',
     'Het lab in',
     'Het lab uit',

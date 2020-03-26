@@ -5,9 +5,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {CreateExperimentComponent} from './create-experiment/create-experiment.component';
 import {ExistingExperimentComponent} from './existing-experiment/existing-experiment.component';
 import {PopupService} from '../popup.service';
-import {Router} from '@angular/router';
 import {FilterService } from '../filter.service';
-import {UserPermissionService} from '../services/user-permission-service';
 import {ExperimentService} from '../experiment.service';
 
 @Component({
@@ -21,10 +19,8 @@ export class ExperimentListComponent implements OnInit {
     private http: HttpClient,
     private popupService: PopupService,
     private modalService: NgbModal,
-    private router: Router,
-    private permissionService: UserPermissionService,
     public filterService: FilterService,
-    private experimentService: ExperimentService) {
+    public experimentService: ExperimentService) {
   }
 
   ngOnInit(): void {
