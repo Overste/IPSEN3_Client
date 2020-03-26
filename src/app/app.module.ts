@@ -19,16 +19,19 @@ import { AlertPopupComponent } from './popup/alert-popup/alert-popup.component';
 import { HorizontaleNavigationBarComponent } from './horizontale-navigation-bar/horizontale-navigation-bar.component';
 import { VerticalNavigationBarComponent } from './vertical-navigation-bar/vertical-navigation-bar.component';
 import { CreateExperimentComponent } from './experiment-list/create-experiment/create-experiment.component';
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import { FormsModule , ReactiveFormsModule} from "@angular/forms";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule , ReactiveFormsModule } from '@angular/forms';
 import { ExistingExperimentComponent } from './experiment-list/existing-experiment/existing-experiment.component';
-import {UpdateUsersComponent} from './update-users/update-users.component';
+import { UpdateUsersComponent} from './update-users/update-users.component';
 import { DashboardListComponent } from './dashboard-list/dashboard-list.component';
 import { DashboardListContainerComponent } from './dashboard-list/dashboard-list-container/dashboard-list-container.component';
 import {FilterService} from './filter.service';
 import {PopupService} from './popup.service';
 import {RolepipePipe} from './rolepipe.pipe';
 import { ProfileComponent } from './profile/profile.component';
+import { GraveyardComponent } from './experiment-list/graveyard/graveyard.component';
+import { ExperimentService } from './experiment.service';
+import {LogService} from './log.service';
 
 @NgModule({
   declarations: [
@@ -53,7 +56,7 @@ import { ProfileComponent } from './profile/profile.component';
     DashboardListContainerComponent,
     RolepipePipe,
     ProfileComponent,
-
+    GraveyardComponent,
   ],
     imports: [
         BrowserModule,
@@ -82,15 +85,19 @@ import { ProfileComponent } from './profile/profile.component';
                     path: 'experiment',
                     component: ExperimentListComponent
                 },
+                {
+                    path: 'graveyard',
+                    component: GraveyardComponent
+                },
 
                 {
                     path: 'dashboard',
                     component: DashboardListComponent
                 },
-              {
-                path: 'profile',
-                component: ProfileComponent
-              },
+                {
+                  path: 'profile',
+                  component: ProfileComponent
+                },
 
                 // otherwise redirect to home
                 {path: '**', redirectTo: ''}
@@ -109,6 +116,8 @@ import { ProfileComponent } from './profile/profile.component';
   providers: [
     PopupService,
     FilterService,
+    ExperimentService,
+    LogService,
     {
       provide: LocationStrategy,
       useClass: HashLocationStrategy

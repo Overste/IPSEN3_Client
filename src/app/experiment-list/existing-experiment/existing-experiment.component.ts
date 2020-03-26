@@ -1,11 +1,9 @@
 import { Component, OnInit, Input} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {ExperimentModel} from '../../models/ExperimentModel';
-import {ServerModel} from '../../models/ServerModel';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { getUpdateExperimentUrl} from '../ExperimentUrl';
 import {LogModel} from '../../models/LogModel';
-import DataModel from "../../models/DataModel";
+import {LogService} from '../../log.service';
+import {ExperimentService} from '../../experiment.service';
 
 @Component({
   selector: 'app-existing-experiment-component',
@@ -30,10 +28,20 @@ export class ExistingExperimentComponent implements OnInit {
   money_source: string;
   organisation: string;
 
-  newLogTitle: string = "Log titel";
-  newLogDescription: string = "Log omschrijving";
+  newLogTitle = '';
+  newLogDescription = '';
 
-  constructor(public activeModal: NgbActiveModal, private http: HttpClient) { }
+  constructor(public activeModal: NgbActiveModal, private experimentService: ExperimentService, private logService: LogService) { }
+
+  private experimentFases = {
+    idea: 'Idee',
+    labin: 'Het lab in',
+    labout: 'Het lab uit',
+    freezer: 'Gepauzeerd',
+    halloffame: 'Succesvol afgerond',
+    graveyard: 'Niet succesvol afgerond',
+    fixedservices: 'Vaste dienst'
+  };
 
   ngOnInit() {
     this.business_owner = this.model.business_owner;
@@ -50,88 +58,46 @@ export class ExistingExperimentComponent implements OnInit {
     this.fetchLogRows();
   }
 
-  fetchLogRows(){
-    let url = this.configureDowloadUrl();
-
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'token': DataModel.account.token
-      })
-    };
-
-    this.http.get<LogModel[]>(
-      url, httpOptions).subscribe(responseData => {
-          this.dataFromServer = responseData;
-        }
-      )
+  fetchLogRows() {
+    this.logService.fetchLogRows(this.experiment_id).subscribe(
+      responseData => {
+        this.dataFromServer = responseData;
+      }
+    );
   }
 
-  configureDowloadUrl(){
-    let host = ServerModel.host;
-    let port = ServerModel.port;
-    let url = "http://" + host + ":" + port + "/log/download/" + this.experiment_id;
-    return url
-  }
-
-  configureUploadUrl(){
-    let host = ServerModel.host;
-    let port = ServerModel.port;
-
-    let url = "http://" + host + ":" + port + "/log/upload";
-    return url;
-  }
-
-  uploadLog(){
-    let logModel = new LogModel();
+  uploadLog() {
+    const logModel = new LogModel();
 
     logModel.title = this.newLogTitle;
     logModel.description = this.newLogDescription;
     logModel.experiment_id = this.experiment_id;
 
-    this.http.post(this.configureUploadUrl(), logModel,
-      {
-        headers: new HttpHeaders({
-          "Accept": "application/json",
-          "Content-Type": "application/json",
-          'token': DataModel.account.token
-        })
-
-      }).subscribe(responsData => {
+    this.logService.uploadLog(logModel).subscribe(responsData => {
       this.dataFromServerOnUpload = responsData;
       this.fetchLogRows();
     });
   }
 
   updateProject() {
-    console.log(this.newLogTitle)
-
-    let data =  JSON.stringify({
-      "id": this.experiment_id,
-      "name": this.experiment_name,
-      "description": this.experiment_description,
-      "experimentleaders": this.experiment_leader,
-      "fasens": this.experiment_phase,
-      "statussen": this.experiment_status,
-      "businessOwners": this.business_owner,
-      "inovation_cost": this.inovation_cost,
-      "money_source": this.money_source,
-      "organisations": this.organisation
+    const data =  JSON.stringify({
+      id: this.experiment_id,
+      name: this.experiment_name,
+      description: this.experiment_description,
+      experimentleaders: this.experiment_leader,
+      fasens: this.experiment_phase,
+      statussen: this.experiment_status,
+      businessOwners: this.business_owner,
+      inovation_cost: this.inovation_cost,
+      money_source: this.money_source,
+      organisations: this.organisation
     });
-    console.log(data);
 
-    this.http.post(getUpdateExperimentUrl(), data,
-      {
-        headers: new HttpHeaders({
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'token': DataModel.account.token
-        })
-      }).subscribe(
+    this.experimentService.updateExperiment(data).subscribe(
       responseData => {
         this.dataFromServerUpdate = responseData;
-        console.log(responseData);
       }
-    )
+    );
     this.fetchLogRows();
   }
 }

@@ -1,35 +1,30 @@
 import { ServerModel } from '../models/ServerModel';
-import DataModel from '../models/DataModel';
-
 
 export function getExperimentUrl() {
-  var host = ServerModel.host;
-  var port = ServerModel.port;
-  var token = DataModel.account.token;
-  var url = "http://" + host + ":" + port + "/experiment/showAllExperiments";
-  return url
+
+  return 'http://' + ServerModel.host + ':' + ServerModel.port + '/experiment/showAllExperiments';
 }
 
 export function getCreateExperimentUrl() {
-  var host = ServerModel.host;
-  var port = ServerModel.port;
-  var token = DataModel.account.token;
-  var url = "http://" + host + ":" + port + "/experiment/createProject";
-  return url
+  return  'http://' + ServerModel.host + ':' + ServerModel.port + '/experiment/createProject';
 }
 
-export function getUpdateExperimentUrl(){
-  var host = ServerModel.host;
-  var port = ServerModel.port;
-  var token = DataModel.account.token;
-  var url = "http://" + host + ":" + port + "/experiment/updateProject";
-  return url
+export function getUpdateExperimentUrl() {
+  return 'http://' + ServerModel.host + ':' + ServerModel.port + '/experiment/updateProject';
 }
 
 export function getPhaseExperimentUrl() {
-  var host = ServerModel.host;
-  var port = ServerModel.port;
-  var token = DataModel.account.token;
-  var url = "http://" + host + ":" + port + "/experiment/showPhaseOfExperiments";
-  return url
+  return 'http://' + ServerModel.host + ':' + ServerModel.port + '/experiment/showPhaseOfExperiments';
+}
+
+export function deleteExperiment(experiment_id: number) {
+  return 'http://' + ServerModel.host + ':' + ServerModel.port + '/experiment/remove/' + experiment_id;
+}
+
+export function getConfigureDowloadUrl(experiment_id: number) {
+  return 'http://' + ServerModel.host + ':' + ServerModel.port + '/log/download/' + experiment_id;
+}
+
+export function getConfigureUploadUrl() {
+  return 'http://' + ServerModel.host + ':' + ServerModel.port + '/log/upload';
 }

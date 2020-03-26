@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {UserUpdate} from "../services/user-update.service";
+import {UserUpdate} from '../services/user-update.service';
 
 /**
  * @author Valerie Timmerman
@@ -26,8 +26,7 @@ export class UpdateUsersComponent implements OnInit {
 
   discardChanges() {
     this.updateService.emptyChanges();
-    this.activeModal.close()
-
+    this.activeModal.close();
   }
 
   ngOnInit() {

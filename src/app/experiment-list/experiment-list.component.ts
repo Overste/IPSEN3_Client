@@ -1,16 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {getExperimentUrl} from "./ExperimentUrl";
-import {ExperimentModel} from "../models/ExperimentModel";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {CreateExperimentComponent} from "./create-experiment/create-experiment.component";
+import {ExperimentModel} from '../models/ExperimentModel';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {CreateExperimentComponent} from './create-experiment/create-experiment.component';
 import {ExistingExperimentComponent} from './existing-experiment/existing-experiment.component';
-import {deleteExperiment} from "../services/experiment";
-import {PopupService} from "../popup.service";
-import DataModel from '../models/DataModel';
-import {Router} from '@angular/router';
-import {FilterService } from "../filter.service";
-import {UserPermissionService} from '../services/user-permission-service';
+import {PopupService} from '../popup.service';
+
+import {FilterService } from '../filter.service';
+import {ExperimentService} from '../experiment.service';
 
 @Component({
   selector: 'app-experiment-list',
@@ -19,72 +16,34 @@ import {UserPermissionService} from '../services/user-permission-service';
 })
 
 export class ExperimentListComponent implements OnInit {
-  dataFromServer: any;
-  canEdit = false;
 
   constructor(
     private http: HttpClient,
     private popupService: PopupService,
     private modalService: NgbModal,
-    private router: Router,
-    private permissionService: UserPermissionService,
-    public filterService: FilterService) {
+    public filterService: FilterService,
+    public experimentService: ExperimentService) {
   }
 
-  showExperiments() {
-    const httpOptions =  {
-      headers: new HttpHeaders({
-        'token': DataModel.account.token
-      })
-    };
-    this.http.get<ExperimentModel[]>(
-      getExperimentUrl(), httpOptions)
-      .subscribe(
-        responseData => {
-          this.filterService.isDataSet.next(responseData)
-        }
-      )
+  ngOnInit(): void {
+    this.experimentService.showExperiments();
   }
 
-  ngOnInit() {
-    if(DataModel.account.token == null) {
-      this.popupService.dangerPopup("U bent nog niet ingelogd.");
-      this.router.navigate(['/']);
-    } else {
-      var self = this;
-      this.permissionService.initialize(function() {
-        self.canEdit = self.permissionService.hasSuperPermissions();
-      });
-      this.showExperiments();
-    }
+  moveExperimentToGraveyard(experiment: ExperimentModel) {
+    experiment.experiment_phase = 'graveyard';
+    this.experimentService.updateExperiment(experiment);
   }
 
-  deleteExperiment(experiment : ExperimentModel) {
-    this.popupService.showConfirmPopup(experiment.experiment_name).then(
-      () => {
-        const headers =  new HttpHeaders().set('token', DataModel.account.token);
-
-        this.http.delete(
-          deleteExperiment(experiment.experiment_id),
-          {responseType: 'text', headers}
-        ).subscribe(responseData => {
-          if (responseData.toString().toLowerCase() == "succes") {
-            this.showExperiments();
-            this.popupService.succesPopup(
-              experiment.experiment_name + ' is succesvol verwijderd!'
-            );
-          } else { this.popupService.dangerPopup(responseData.toString()); }
-        });
-      }
-    )
+  deleteExperiment(experiment: ExperimentModel) {
+    this.experimentService.deleteExperiment(experiment);
   }
 
-  openExistingExperiment(model: ExperimentModel){
-    const modal = this.modalService.open(ExistingExperimentComponent, { windowClass : "myCustomModalClass"});
+  openExistingExperiment(model: ExperimentModel) {
+    const modal = this.modalService.open(ExistingExperimentComponent, { windowClass : 'myCustomModalClass'});
     modal.componentInstance.model = model;
   }
 
   openCreateExperiment() {
-    this.modalService.open(CreateExperimentComponent, { windowClass : "myCustomModalClass"});
+    this.modalService.open(CreateExperimentComponent, { windowClass : 'myCustomModalClass'});
   }
 }

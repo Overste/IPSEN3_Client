@@ -18,7 +18,7 @@ export class DashboardListComponent implements OnInit {
 
   }
 
-  setExperimentParent(experimentChild: any){
+  setExperimentParent(experimentChild: any) {
     this.experimentParent = experimentChild;
   }
 
