@@ -9,7 +9,7 @@ import {ExperimentModel} from './models/ExperimentModel';
 import {
   getExperimentUrl,
   getUpdateExperimentUrl,
-  deleteExperiment
+  deleteExperiment, getCreateExperimentUrl
 } from './experiment-list/ExperimentUrl';
 
 import {Injectable} from '@angular/core';
@@ -68,6 +68,30 @@ export class ExperimentService {
     return filteredExperimentsByPhase;
   }
 
+  createExperiment(data: ExperimentModel) {
+    return this.http.post(getCreateExperimentUrl(), data,
+      {
+        headers: new HttpHeaders({
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          token: DataModel.account.token
+        })
+      }
+    );
+  }
+
+  updateExperiment(data) {
+    return this.http.post(getUpdateExperimentUrl(), data,
+      {
+        headers: new HttpHeaders({
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          token: DataModel.account.token
+        })
+      }
+    );
+  }
+
   deleteExperiment(experiment: ExperimentModel) {
     this.popupService.showConfirmPopup(experiment.experiment_name).then(
       () => {
@@ -86,18 +110,6 @@ export class ExperimentService {
         }, error => {
             this.handleError(error);
           });
-      }
-    );
-  }
-
-  updateExperiment(data) {
-    return this.http.post(getUpdateExperimentUrl(), data,
-      {
-        headers: new HttpHeaders({
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          token: DataModel.account.token
-        })
       }
     );
   }
