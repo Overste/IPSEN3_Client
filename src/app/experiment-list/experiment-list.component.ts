@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {ExperimentModel} from '../models/ExperimentModel';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {CreateExperimentComponent} from './create-experiment/create-experiment.component';
@@ -30,7 +30,8 @@ export class ExperimentListComponent implements OnInit {
   }
 
   moveExperimentToGraveyard(experiment: ExperimentModel) {
-    experiment.experiment_phase = 'graveyard';
+    // experiment.experiment_phase = 'graveyard';
+    experiment.experiment_phase = 'Niet succesvol afgerond';
     this.experimentService.updateExperiment(experiment);
   }
 

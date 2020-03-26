@@ -33,15 +33,24 @@ export class ExistingExperimentComponent implements OnInit {
 
   constructor(public activeModal: NgbActiveModal, private experimentService: ExperimentService, private logService: LogService) { }
 
-  private experimentFases = {
-    idea: 'Idee',
-    labin: 'Het lab in',
-    labout: 'Het lab uit',
-    freezer: 'Gepauzeerd',
-    halloffame: 'Succesvol afgerond',
-    graveyard: 'Niet succesvol afgerond',
-    fixedservices: 'Vaste dienst'
-  };
+  // private experimentFases = {
+  //   idea: 'Idee',
+  //   labin: 'Het lab in',
+  //   labout: 'Het lab uit',
+  //   freezer: 'Gepauzeerd',
+  //   halloffame: 'Succesvol afgerond',
+  //   graveyard: 'Niet succesvol afgerond',
+  //   fixedservices: 'Vaste dienst'
+  // };
+  private experimentFases = [
+    'Idee',
+    'Het lab in',
+    'Het lab uit',
+    'Gepauzeerd',
+    'Succesvol afgerond',
+    'Niet succesvol afgerond',
+    'Vaste dienst'
+  ];
 
   ngOnInit() {
     this.business_owner = this.model.business_owner;

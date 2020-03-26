@@ -6,14 +6,16 @@
   </div>
   <table class="table table-fixed ">
     <thead>
-      <th scope="col" class="col-2">Naam</th>
-      <th scope="col" class="col-1">Id</th>
-      <th scope="col" class="col-1">Fase</th>
-      <th scope="col" class="col-1">Status</th>
-      <th scope="col" class="col-2">Business owner</th>
-      <th scope="col" class="col-1">Inkomen</th>
-      <th scope="col" class="col-2">Organisation</th>
-      <th scope="col" class="col-2">Verwijderen</th>
+      <tr>
+        <th scope="col" class="col-2">Naam</th>
+        <th scope="col" class="col-1">Id</th>
+        <th scope="col" class="col-1">Fase</th>
+        <th scope="col" class="col-1">Status</th>
+        <th scope="col" class="col-2">Business owner</th>
+        <th scope="col" class="col-1">Inkomen</th>
+        <th scope="col" class="col-2">Organisation</th>
+        <th scope="col" class="col-2">Verwijderen</th>
+      </tr>
     </thead>
     <tbody>
       <tr *ngFor="let experiment of filterService.observable$ | async" >
@@ -41,6 +43,6 @@
     </tbody>
   </table>
   <div class="btn-group btn-toolbar">
-    <button class="btn" [disabled]="!canEdit" (click)="openCreateExperiment()">Maak experiment</button>
+    <button class="btn btn-primary" [disabled]="!canEdit" (click)="openCreateExperiment()">Maak experiment</button>
   </div>
 </div>

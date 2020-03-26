@@ -22,11 +22,17 @@
   <div class="form-group small_field">
     <label for="experiment_phase">Experiment Fasen</label>
     <select [(ngModel)]="experiment_phase" class="form-control" id="experiment_phase" name="experiment_phase">
+<!--experiment_phase      <option-->
+<!--        [value]="phase.key"-->
+<!--        [selected]="experiment_phase === phase.key"-->
+<!--        *ngFor="let phase of experimentFases | keyvalue" >-->
+<!--        {{ phase.value }}-->
+<!--      </option>      -->
       <option
-        [value]="phase.key"
-        [selected]="experiment_phase === phase.key"
-        *ngFor="let phase of experimentFases | keyvalue" >
-        {{ phase.value }}
+        [value]="phase"
+        [selected]="experiment_phase === phase"
+        *ngFor="let phase of experimentFases" >
+        {{ phase }}
       </option>
     </select>
   </div>

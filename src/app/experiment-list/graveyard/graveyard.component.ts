@@ -1,14 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {PopupService} from '../../popup.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Router} from '@angular/router';
-import {UserPermissionService} from '../../services/user-permission-service';
 import {FilterService} from '../../filter.service';
-import DataModel from '../../models/DataModel';
 import {ExperimentModel} from '../../models/ExperimentModel';
-import {getExperimentUrl} from '../ExperimentUrl';
-import {deleteExperiment} from '../ExperimentUrl';
 import {ExistingExperimentComponent} from '../existing-experiment/existing-experiment.component';
 import {CreateExperimentComponent} from '../create-experiment/create-experiment.component';
 import {ExperimentService} from '../../experiment.service';
@@ -30,7 +25,7 @@ export class GraveyardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.experimentService.showExperiments('kerkhoff');
+    this.experimentService.showExperiments('Niet succesvol afgerond');
   }
 
   deleteExperiment(experiment: ExperimentModel) {
