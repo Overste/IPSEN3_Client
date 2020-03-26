@@ -6,14 +6,14 @@
   </div>
   <table class="table table-fixed">
     <thead>
-    <th class="col-4" scope="col">Gebruikersnaam</th>
-    <th class="col-4" scope="col">Rol</th>
-    <th class="col-4" scope="col">Verwijderen</th>
+    <th class="col-5" scope="col">Gebruikersnaam</th>
+    <th class="col-5" scope="col">Rol</th>
+    <th class="col-2" scope="col">&nbsp;</th>
     </thead>
     <tbody>
       <tr *ngFor="let user of filterService.observable$ | async">
-        <td class="col-4"><ngb-highlight [result]="user.username" [term]="filterService.filter.value"></ngb-highlight></td>
-        <td class="col-4">
+        <td class="col-5"><ngb-highlight [result]="user.username" [term]="filterService.filter.value"></ngb-highlight></td>
+        <td class="col-5">
           <select name="role" class="form-control" [disabled]="!canEdit" (change)="onRoleChanged(user, $event)">
             <option [selected]="getRole(user) == 'USER'" value="USER">Gebruiker</option>
             <option [selected]="getRole(user) == 'EMPLOYEE'" value="EMPLOYEE">Medewerker</option>
@@ -21,8 +21,10 @@
             <option disabled [selected]="getRole(user) == 'UNCLASSIFIED'" value="UNCLASSIFIED">Ongeverifieerd</option>
           </select>
         </td>
-        <td class="col-4">
-          <button class="btn btn-block btn-danger" [disabled]="!canEdit" (click)="onDelete(user)">Verwijder</button>
+        <td class="col-2">
+          <button class="btn btn-block btn-danger" [disabled]="!canEdit" (click)="onDelete(user)">
+            <span class="glyphicon glyphicon-trash"></span>
+          </button>
         </td>
       </tr>
       <!-- Fix hover over table items -->

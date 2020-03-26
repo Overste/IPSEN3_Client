@@ -3,6 +3,7 @@ import DataModel from "../models/DataModel";
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {ServerModel} from "../models/ServerModel";
 import {UserRole} from "../models/UserRole";
+import {PopupService} from '../popup.service';
 
 /**
  * @author Valerie Timmerman
@@ -14,7 +15,7 @@ export class UserPermissionService {
 
   role: UserRole;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private popupService: PopupService) {
   }
 
   isLoggedIn() {
@@ -60,8 +61,20 @@ export class UserPermissionService {
       if(callBack)
         callBack();
       }, error => {
-      console.log(error);
+      this.handleError(error);
       }
     );
   }
+
+  handleError(error: any) {
+    switch (error.status) {
+      case 400:
+        this.popupService.dangerPopup("Er trad een server probleem op, we konden uw permissies niet valideren.");
+        break;
+      case 404:
+        this.popupService.dangerPopup("We konden uw account permissies niet vinden in onze database, neem contact op" +
+          "met de systeembeheerder.");
+    }
+  }
+
 }

@@ -90,31 +90,22 @@ export class DashboardListContainerComponent implements OnInit {
       });
   }
 
-  postRequest(dashboardModel: DashboardModel) {
-    this.http
-      .post<DashboardModel>(getPhaseExperimentUrl(), dashboardModel,
-      {
-        headers: new HttpHeaders(
-          {
-            // 'Access-Control-Allow-Headers': 'Content-Type',
-            // 'Access-Control-Allow-Methods': GET, POST, OPTIONS,
-            // 'Access-Control-Allow-Origin': *,
+  postRequest(dashboardModel: DashboardModel){
 
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            responseType: 'text',
-            token: DataModel.account.token
-          })
-      }).subscribe(
-      responseData => {
-          console.log('responseData ' + responseData);
-          this.postData(responseData); },
-      (err: HttpErrorResponse) => {
-          console.log('error ');
-          console.log(err);
-          this.postError(err);
-      }
-    );
+    const headers = new HttpHeaders(
+      { "Accept": "application/json",
+        "Content-Type": "application/json",
+        'token': DataModel.account.token
+      });
+
+    this.http
+      .post(getPhaseExperimentUrl(), dashboardModel,
+      { responseType: 'text', headers
+      }).subscribe(posts => {
+        this.postData(posts);
+        this.fetchPost();
+        },
+      err => {  this.postError(err); });
   }
 
   postBody() {
@@ -130,10 +121,9 @@ export class DashboardListContainerComponent implements OnInit {
     this.showPopUpSucces();
   }
 
-  postError(err: HttpErrorResponse) {
+  postError(err: HttpErrorResponse){
     this.serverExperimentsOnUpload = err.error;
     this.showPopUpFailed();
-    setTimeout(() => location.reload(), 2300);
   }
 
   showPopUpSucces() {
@@ -146,9 +136,9 @@ export class DashboardListContainerComponent implements OnInit {
     this.notifyExperiment.emit(selectedExperiment);
   }
 
-  showPopUpFailed() {
+  showPopUpFailed(){
     this.popupService.dangerPopup(
-      'CONNECTION ERROR: ' + this.experimentChild.experiment_name + ' Is Niet Fase Veranderd! Probeer Opnieuw.'
+      'Er ging iets mis, ' + this.experimentChild.experiment_name + ' is niet van fase veranderd.'
     );
   }
 

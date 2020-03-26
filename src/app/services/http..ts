@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProtocolR } from '../models/Protocol';
 
-
-
-
-
 /**
 *
 * @author Anthony Scheeres
